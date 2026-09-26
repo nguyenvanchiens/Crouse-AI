@@ -7,12 +7,49 @@ Website khóa học AI tiếng Việt, viết bằng React (Vite + React Router)
 ```bash
 npm install
 npm run dev               # http://localhost:5391
-npm run build             # xuất bản tĩnh ra dist/
+npm run build             # kiểm tra dữ liệu bài học rồi xuất bản tĩnh ra dist/
 npm run preview           # xem thử bản build
+npm run cf:preview        # chạy thử bằng Cloudflare runtime (có _headers, SPA fallback)
+npm run deploy            # build và deploy lên Cloudflare
 npm run validate:lessons  # kiểm tra dữ liệu bài học
 ```
 
-Khi deploy lên host tĩnh, cấu hình mọi đường dẫn lạ trả về `index.html` (SPA fallback) vì router dùng đường dẫn thật như `/bai-hoc/t1-b1`.
+## Deploy lên Cloudflare
+
+Website là trang tĩnh. `npm run build` kiểm tra dữ liệu bài học (lỗi thì dừng, không deploy), sau đó Vite xuất ra `dist/`. File `public/_headers` được copy vào `dist/` để đặt header bảo mật và cache.
+
+### Cách 1: Cloudflare Workers, tự build khi push (khuyến nghị)
+
+1. Vào Cloudflare Dashboard, chọn **Workers & Pages** → **Create** → **Import a repository**, rồi chọn repo này.
+2. Điền cấu hình build:
+   - Build command: để trống (hoặc `npm run build`, đều được)
+   - Deploy command: `npx wrangler deploy`
+   - Root directory: để trống
+
+   `wrangler deploy` tự chạy `npm run build` trước khi deploy (khai báo ở trường `build.command` trong `wrangler.jsonc`).
+3. Bấm **Deploy**. Từ lần sau, mỗi lần push lên nhánh `main` sẽ tự build và deploy lại.
+
+Cấu hình nằm trong [wrangler.jsonc](wrangler.jsonc): tên Worker là `crouse-ai`, phục vụ file tĩnh từ `dist/`, và `not_found_handling: "single-page-application"` để các đường dẫn như `/bai-hoc/t1-b1` trả về `index.html` khi tải lại trang.
+
+### Cách 2: Cloudflare Pages
+
+Chọn **Workers & Pages** → **Create** → **Pages** → **Connect to Git**, chọn repo, rồi điền:
+- Framework preset: `React (Vite)` hoặc `None`
+- Build command: `npm run build`
+- Build output directory: `dist`
+
+Pages tự trả về `index.html` cho đường dẫn không khớp file khi dự án không có `404.html`, nên React Router vẫn chạy đúng.
+
+### Cách 3: Deploy từ máy
+
+```bash
+npx wrangler login   # đăng nhập Cloudflare một lần
+npm run deploy
+```
+
+### Header bảo mật
+
+[public/_headers](public/_headers) đặt CSP chỉ cho phép: Google Fonts, ảnh thumbnail từ `i.ytimg.com` và video nhúng từ `www.youtube-nocookie.com`. Nếu thêm nguồn ngoài mới (ảnh, script, iframe), nhớ bổ sung vào CSP.
 
 ## Cấu trúc
 
