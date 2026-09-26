@@ -293,7 +293,7 @@ export default function Learn() {
               </>
             ) : (
               <>
-                <button className="btn btn-line btn-sm" type="button" onClick={complete}><ICheck /><span>{next ? 'Hoàn thành và học tiếp' : 'Hoàn thành khóa học'}</span></button>
+                <button className="btn btn-line btn-sm" type="button" onClick={complete}><ICheck /><span className="t-long">{next ? 'Hoàn thành và học tiếp' : 'Hoàn thành khóa học'}</span><span className="t-short">Hoàn thành</span></button>
                 {next && <Link className="btn btn-ghost btn-sm" to={lessonUrl(next.id)} title={`Bài tiếp: ${next.title}`}><span className="t">Bỏ qua</span><IRight /></Link>}
               </>
             )}
