@@ -1,9 +1,17 @@
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { C, lessonUrl } from '../lib/course.js';
 import { progress, learner, theme, useStore } from '../lib/store.js';
 import { useUI } from '../lib/ui.jsx';
 import { BrandMark, Ring } from './Visuals.jsx';
-import { IMoon, ISun } from './Icons.jsx';
+import { IClose, IMenu, IMoon, ISun } from './Icons.jsx';
+
+const NAV = [
+  ['/', 'Khóa học'],
+  ['/cach-hoc', 'Cách học'],
+  ['/hoc-cua-toi', 'Học của tôi'],
+  ['/thuat-ngu', 'Thuật ngữ']
+];
 
 export function ThemeToggle({ className = '' }) {
   useStore();
@@ -21,6 +29,15 @@ export function Header() {
   const pct = progress.pct();
   const nxt = progress.next();
   const navCls = ({ isActive }) => (isActive ? 'active' : undefined);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { pathname } = useLocation();
+  useEffect(() => setMenuOpen(false), [pathname]);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = e => { if (e.key === 'Escape') setMenuOpen(false); };
+    addEventListener('keydown', onKey);
+    return () => removeEventListener('keydown', onKey);
+  }, [menuOpen]);
 
   let cta;
   if (!nxt) cta = <Link className="btn btn-brand btn-sm header-cta" to="/chung-nhan">Xem chứng nhận</Link>;
@@ -33,10 +50,8 @@ export function Header() {
       <header className="site-header">
         <div className="wrap">
           <Link className="brand" to="/" aria-label="Tuyến AI, trang chủ"><BrandMark /><span>Tuyến AI</span></Link>
-          <nav className="nav" aria-label="Điều hướng chính">
-            <NavLink to="/" end className={navCls}>Khóa học</NavLink>
-            <NavLink to="/hoc-cua-toi" className={navCls}>Học của tôi</NavLink>
-            <NavLink to="/thuat-ngu" className={navCls}>Thuật ngữ</NavLink>
+          <nav className={`nav${menuOpen ? ' open' : ''}`} id="main-nav" aria-label="Điều hướng chính">
+            {NAV.map(([to, label]) => <NavLink key={to} to={to} end={to === '/'} className={navCls}>{label}</NavLink>)}
           </nav>
           <div className="header-tools">
             {total > 0 && (
@@ -44,9 +59,14 @@ export function Header() {
             )}
             <ThemeToggle />
             {cta}
+            <button className="icon-btn menu-toggle" type="button" aria-controls="main-nav" aria-expanded={menuOpen}
+              aria-label={menuOpen ? 'Đóng menu' : 'Mở menu'} onClick={() => setMenuOpen(o => !o)}>
+              {menuOpen ? <IClose /> : <IMenu />}
+            </button>
           </div>
         </div>
       </header>
+      {menuOpen && <div className="nav-scrim" onClick={() => setMenuOpen(false)} aria-hidden="true" />}
     </>
   );
 }
@@ -67,6 +87,7 @@ export function Footer() {
         <div>
           <h3>Học viên</h3>
           <ul>
+            <li><Link to="/cach-hoc">Cách học và kế hoạch</Link></li>
             <li><Link to="/hoc-cua-toi">Khóa học của tôi</Link></li>
             <li><Link to="/chung-nhan">Chứng nhận hoàn thành</Link></li>
             <li><Link to="/thuat-ngu">Từ điển thuật ngữ</Link></li>

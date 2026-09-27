@@ -1,0 +1,135 @@
+/* =========================================================
+   CÁCH HỌC (/cach-hoc): kế hoạch học, phương pháp, dự án, năng lực
+   ========================================================= */
+.guide-toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.guide-toc a { color: var(--band-ink); text-decoration: none; font-size: .88rem; font-weight: 600; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .22); }
+.guide-toc a:hover { background: rgba(255, 255, 255, .08); }
+.guide { max-width: 1000px; }
+.guide-sec { padding-top: 48px; scroll-margin-top: 72px; }
+.guide-sec > h2 { font-size: clamp(1.4rem, 3vw, 1.8rem); }
+.guide-sec > .lead { color: var(--ink-2); margin-top: 8px; max-width: 46rem; }
+.guide-sec h3 { font-size: 1.05rem; letter-spacing: -0.01em; }
+
+/* Chọn mục tiêu / nhịp học */
+.step-no { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: var(--bg); font-size: .82rem; font-weight: 800; margin-right: 10px; flex: none; }
+.choice-group { border: 0; padding: 0; margin: 24px 0 0; min-width: 0; }
+.choice-group legend { display: flex; align-items: center; font-weight: 800; font-size: 1.05rem; margin-bottom: 12px; padding: 0; }
+.choices { display: grid; gap: 12px; }
+.choices-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 800px) { .choices-3 { grid-template-columns: minmax(0, 1fr); } }
+.choice { position: relative; display: block; cursor: pointer; border: 1.5px solid var(--rule); border-radius: var(--r-md); background: var(--surface); padding: 16px 16px 16px 46px; }
+.choice:hover { border-color: var(--ink-3); }
+.choice.on { border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 18%, transparent); }
+.choice input { position: absolute; left: 16px; top: 18px; width: 18px; height: 18px; accent-color: var(--brand); margin: 0; }
+.choice:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
+.choice-body { display: flex; flex-direction: column; gap: 6px; font-size: .93rem; color: var(--ink-2); line-height: 1.5; }
+.choice-body strong { color: var(--ink); font-size: 1.02rem; }
+.choice-meta { font-weight: 700; color: var(--ink-3); font-size: .85rem; }
+.choice-lines { display: flex; gap: 3px; margin: 2px 0; }
+.choice-lines i { flex: 1; height: 5px; border-radius: 3px; }
+.choice-result { font-size: .9rem; }
+.choice-result strong { color: var(--ink); font-size: .9rem; }
+.choice-needs { font-size: .85rem; color: var(--ink-3); }
+
+/* Thanh tóm tắt và trạng thái kế hoạch */
+.plan-bar { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; margin-top: 24px; padding: 16px 18px; border-radius: var(--r-md); background: var(--surface-2); }
+.plan-bar > div:first-child { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 0; }
+.plan-since { color: var(--ink-3); }
+.plan-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.plan-status { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; margin-top: 16px; padding: 18px 20px; border-radius: var(--r-md); border: 1px solid var(--rule); background: var(--surface); border-left: 6px solid var(--st); }
+.plan-status > div { flex: 1 1 240px; }
+.plan-status p { color: var(--ink-2); margin-top: 2px; }
+.plan-status.s-ok, .plan-status.s-ahead, .plan-status.s-done { --st: var(--tip); --ring: var(--tip); }
+.plan-status.s-behind { --st: var(--warn); --ring: var(--warn); }
+
+/* Danh sách tuần */
+.weeks { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 12px; }
+.week { border: 1px solid var(--rule); border-radius: var(--r-md); background: var(--surface); padding: 16px 18px; }
+.week.current { border-color: var(--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 15%, transparent); }
+.week.complete { background: color-mix(in srgb, var(--tip) 5%, var(--surface)); }
+.week-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
+.week-no { font-weight: 800; font-size: 1.02rem; }
+.week-date { color: var(--ink-3); font-size: .9rem; }
+.here-pill { background: var(--brand); color: #fff; }
+.week-time { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; color: var(--ink-3); font-size: .85rem; }
+.week-time svg { width: 15px; height: 15px; }
+.week.compact { padding: 10px 18px; }
+.week-done { color: var(--tip); font-weight: 700; }
+.weeks-more { margin-top: 12px; }
+.week-prep { margin-top: 8px; font-size: .9rem; color: var(--warn); }
+.week-prep a { color: inherit; font-weight: 700; }
+.week-lessons { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 2px; }
+.week-lessons li { display: flex; align-items: center; gap: 10px; padding: 5px 0; font-size: .95rem; }
+.week-lessons a { text-decoration: none; }
+.week-lessons a:hover { text-decoration: underline; }
+.week-lessons li.done a { color: var(--ink-3); }
+.wl-dot { width: 18px; height: 18px; border-radius: 50%; border: 3px solid var(--c); flex: none; display: grid; place-items: center; }
+.week-lessons li.done .wl-dot { background: var(--c); color: #fff; }
+.wl-dot svg { width: 11px; height: 11px; }
+.week-milestone { display: flex; gap: 10px; align-items: flex-start; margin-top: 10px; padding: 10px 12px; border-radius: var(--r-sm); background: color-mix(in srgb, var(--c) 10%, var(--surface)); text-decoration: none; font-size: .93rem; }
+.week-milestone svg { width: 18px; height: 18px; color: var(--c); flex: none; margin-top: 2px; }
+.week-milestone:hover strong { text-decoration: underline; }
+.week-final { margin-top: 8px; }
+.week-final strong { display: block; }
+.week-final p { color: var(--ink-2); font-size: .93rem; margin-top: 4px; }
+.week-final a { color: var(--brand); }
+
+/* 6 bước học mỗi bài */
+.guide-steps { list-style: none; counter-reset: gs; margin: 20px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.guide-steps li { counter-increment: gs; position: relative; padding: 16px 16px 16px 60px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--rule); display: flex; flex-direction: column; gap: 4px; }
+.guide-steps li::before { content: counter(gs); position: absolute; left: 16px; top: 16px; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: var(--bg); font-weight: 800; font-size: .9rem; }
+.guide-steps span { color: var(--ink-2); font-size: .93rem; }
+@media (max-width: 900px) { .guide-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .guide-steps { grid-template-columns: minmax(0, 1fr); } }
+
+/* Thẻ chung: chuẩn bị, mẹo, sau khóa học */
+.guide-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+@media (max-width: 700px) { .guide-grid { grid-template-columns: minmax(0, 1fr); } }
+.guide-card { padding: 16px 18px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--rule); }
+.guide-card p { color: var(--ink-2); font-size: .94rem; margin-top: 6px; }
+.guide-links { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.guide-links a { color: var(--brand); font-weight: 700; }
+
+/* Dự án cuối mỗi chương */
+.projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 20px; }
+@media (max-width: 760px) { .projects { grid-template-columns: minmax(0, 1fr); } }
+.project { scroll-margin-top: 80px; padding: 18px 20px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--rule); border-top: 5px solid var(--c); display: flex; flex-direction: column; }
+.project:target { box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 30%, transparent); }
+.project-k { color: var(--c); font-weight: 700; font-size: .85rem; }
+.project h3 { margin: 4px 0 8px; font-size: 1.1rem; }
+.project > p { color: var(--ink-2); font-size: .94rem; }
+.project > p.project-done-h { margin-top: 12px; font-weight: 700; color: var(--ink); font-size: .9rem; }
+.project ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 6px; font-size: .92rem; color: var(--ink-2); }
+.project li { display: flex; gap: 8px; }
+.project li svg { width: 16px; height: 16px; flex: none; margin-top: 3px; color: var(--c); }
+.project-foot { margin-top: auto; padding-top: 14px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: .88rem; color: var(--ink-3); }
+.project-foot a { color: var(--ink); font-weight: 700; }
+
+/* Năng lực tự đánh giá */
+.skills-sum { display: flex; align-items: center; gap: 12px; margin-top: 18px; }
+.skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
+@media (max-width: 760px) { .skills { grid-template-columns: minmax(0, 1fr); } }
+.skill-group { padding: 16px 18px; border-radius: var(--r-md); background: var(--surface); border: 1px solid var(--rule); border-left: 5px solid var(--c); }
+.skill-group h3 { display: flex; flex-direction: column; gap: 2px; }
+.skill-group h3 span { color: var(--c); font-size: .82rem; font-weight: 700; }
+.skill-group ul { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 4px; }
+.skill-group label { display: flex; gap: 10px; align-items: flex-start; padding: 6px 0; cursor: pointer; font-size: .94rem; line-height: 1.45; }
+.skill-group input { width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--c); flex: none; }
+.skill-group input:checked + span { color: var(--ink-3); }
+.skill-link { display: inline-block; margin-top: 8px; font-size: .88rem; font-weight: 700; color: var(--c); }
+
+.guide-cta { margin-top: 24px; padding: 20px; border-radius: var(--r-md); background: var(--band); color: var(--band-ink); display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.guide-cta p { flex: 1 1 240px; font-weight: 700; }
+.guide-cta .btn-ghost { color: var(--band-ink); border-color: rgba(255, 255, 255, .35); }
+.guide-cta .btn-ghost:hover { background: rgba(255, 255, 255, .08); }
+
+@media (max-width: 420px) {
+  .plan-actions, .plan-actions .btn, .guide-cta .btn { width: 100%; }
+  .plan-actions .btn, .guide-cta .btn, .plan-mini .btn { padding-left: .8em; padding-right: .8em; font-size: .93rem; }
+}
+
+/* Thẻ kế hoạch nhỏ ở trang Học của tôi */
+.plan-mini p { margin-top: 4px; }
+.plan-mini .row { display: flex; align-items: center; gap: 12px; margin: 8px 0 12px; }
+.plan-mini.s-behind { --ring: var(--warn); }
+.plan-mini.s-ok, .plan-mini.s-ahead, .plan-mini.s-done { --ring: var(--tip); }

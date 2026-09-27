@@ -1,10 +1,37 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { C, flat, LESSONS, lessonInfo, lessonUrl, lessonNum, trackMinutes, fmtMin, ytThumb, COURSE_TITLE } from '../lib/course.js';
-import { progress, learner, notes, useStore } from '../lib/store.js';
+import { progress, learner, notes, plan, useStore } from '../lib/store.js';
+import { planStatus, goalById } from '../lib/plan.js';
 import { useUI } from '../lib/ui.jsx';
 import { Cover, Html, Ring } from '../components/Visuals.jsx';
 import { IPlay } from '../components/Icons.jsx';
+
+// Tóm tắt kế hoạch học (tạo ở trang Cách học)
+function PlanCard() {
+  const p = plan.get();
+  if (!p) {
+    return (
+      <div className="side-card plan-mini">
+        <h2>Kế hoạch học</h2>
+        <p>Chọn mục tiêu và nhịp học để có lịch theo tuần, mốc dự án và nhắc tiến độ.</p>
+        <Link className="btn btn-dark btn-block" to="/cach-hoc" style={{ marginTop: 12 }}>Tạo kế hoạch học</Link>
+      </div>
+    );
+  }
+  const s = planStatus(p);
+  return (
+    <div className={`side-card plan-mini s-${s.state}`}>
+      <h2>Kế hoạch: {goalById(p.goal).name}</h2>
+      <div className="row">
+        <Ring pct={Math.round(s.done / s.total * 100)} size={44} stroke={5} />
+        <div><strong>Tuần {s.current}/{s.weeks.length}</strong><br /><span style={{ color: 'var(--ink-3)', fontSize: '.88rem' }}>{s.done}/{s.total} bài trong kế hoạch</span></div>
+      </div>
+      <p>{s.text}</p>
+      <Link className="btn btn-ghost btn-block" to="/cach-hoc#ke-hoach" style={{ marginTop: 12 }}>Xem kế hoạch theo tuần</Link>
+    </div>
+  );
+}
 
 export default function Dashboard() {
   useStore();
@@ -124,6 +151,7 @@ export default function Dashboard() {
         </div>
 
         <aside>
+          <PlanCard />
           <div className="side-card">
             <h2>Chứng nhận hoàn thành</h2>
             <div className={`cert-mini${doneAll ? '' : ' locked'}`}>

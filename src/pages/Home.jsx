@@ -201,7 +201,7 @@ export default function Home() {
 
           <section className="l-section" aria-labelledby="ch-h">
             <h2 id="ch-h">Chương trình gồm 5 chương</h2>
-            <p className="lead">Mỗi chương là một khóa nhỏ hoàn chỉnh. Học theo thứ tự nếu bạn mới bắt đầu, hoặc vào thẳng chương bạn cần.</p>
+            <p className="lead">Mỗi chương là một khóa nhỏ hoàn chỉnh. Học theo thứ tự nếu bạn mới bắt đầu, hoặc vào thẳng chương bạn cần. Chưa biết nên học đến đâu, mỗi tuần bao nhiêu? <Link to="/cach-hoc" style={{ color: 'var(--brand)', fontWeight: 700 }}>Tạo kế hoạch học của bạn</Link>.</p>
             <div className="chapters">
               {C.map(t => {
                 const ids = t.lessons.map(l => l.id);

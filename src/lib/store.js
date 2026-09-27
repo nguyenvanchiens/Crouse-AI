@@ -64,7 +64,7 @@ export const progress = {
   quiz: () => get('tuyenai.quiz', {}),
   setQuiz(id, score, total) { const q = this.quiz(); q[id] = { score, total }; set('tuyenai.quiz', q); },
   reset() {
-    ['tuyenai.done', 'tuyenai.quiz', 'tuyenai.last', 'tuyenai.notes'].forEach(k => { try { localStorage.removeItem(k); } catch { /* bỏ qua */ } });
+    ['tuyenai.done', 'tuyenai.quiz', 'tuyenai.last', 'tuyenai.notes', 'tuyenai.plan', 'tuyenai.skills'].forEach(k => { try { localStorage.removeItem(k); } catch { /* bỏ qua */ } });
     emit();
   }
 };
@@ -77,6 +77,20 @@ export const notes = {
     if (text && text.trim()) n[id] = text; else delete n[id];
     set('tuyenai.notes', n);
   }
+};
+
+// ---------- Kế hoạch học ----------
+// { goal, pace, start } ; start là ngày bắt đầu kế hoạch (ms)
+export const plan = {
+  get: () => get('tuyenai.plan', null),
+  save(goal, pace, start) { set('tuyenai.plan', { goal, pace, start }); },
+  clear() { try { localStorage.removeItem('tuyenai.plan'); } catch { /* bỏ qua */ } emit(); }
+};
+
+// Năng lực tự đánh giá: khoá "chương:chỉ số"
+export const skills = {
+  all: () => get('tuyenai.skills', {}),
+  toggle(key, on) { const s = this.all(); if (on) s[key] = Date.now(); else delete s[key]; set('tuyenai.skills', s); }
 };
 
 // ---------- Theme ----------

@@ -7,6 +7,7 @@ import Learn from './pages/Learn.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import Certificate from './pages/Certificate.jsx';
 import Glossary from './pages/Glossary.jsx';
+import StudyGuide from './pages/StudyGuide.jsx';
 import NotFound from './pages/NotFound.jsx';
 
 // Cuộn lên đầu khi đổi trang; cuộn tới mục khi URL có #hash
@@ -33,6 +34,7 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="cach-hoc" element={<StudyGuide />} />
           <Route path="hoc-cua-toi" element={<Dashboard />} />
           <Route path="chung-nhan" element={<Certificate />} />
           <Route path="thuat-ngu" element={<Glossary />} />

@@ -126,28 +126,31 @@ p { margin: 0; }
 .nav a[aria-current="page"] { color: var(--ink); box-shadow: inset 0 -3px 0 var(--brand); border-radius: 0; }
 .header-tools { display: flex; align-items: center; gap: 10px; margin-left: auto; }
 .header-progress { display: flex; align-items: center; gap: 6px; text-decoration: none; font-weight: 700; font-size: .88rem; color: var(--ink-2); }
-@media (max-width: 820px) {
-  .nav a { padding: 8px 8px; font-size: .88rem; }
+.menu-toggle, .nav-scrim { display: none; }
+
+/* Màn hình ≤ 900px: menu gập vào nút ☰, xổ xuống dưới header */
+@media (max-width: 900px) {
+  .menu-toggle { display: inline-grid; }
+  .nav {
+    display: none; position: absolute; left: 0; right: 0; top: 100%;
+    flex-direction: column; align-items: stretch; gap: 0; padding: 8px 0 12px;
+    background: var(--surface); border-bottom: 1px solid var(--rule); box-shadow: var(--shadow-lg);
+  }
+  .nav.open { display: flex; }
+  .nav a { padding: 14px 24px; font-size: 1rem; border-radius: 0; }
+  .nav a[aria-current="page"] { box-shadow: inset 4px 0 0 var(--brand); background: var(--surface-2); }
+  .nav-scrim { display: block; position: fixed; inset: 64px 0 0 0; background: rgba(10, 14, 20, .35); z-index: 40; }
   .header-progress span { display: none; }
   .site-header .wrap { gap: 12px; }
 }
-@media (max-width: 640px) {
-  .brand span, .header-cta { display: none; }
+@media (max-width: 480px) {
+  .header-cta { display: none; }
+  .site-header .wrap { padding: 0 12px; gap: 8px; }
+  .nav a { padding: 14px 16px; }
+  .header-tools { gap: 8px; }
 }
-@media (max-width: 420px) {
-  .site-header .wrap { gap: 6px; }
-  .nav a { padding: 8px 5px; font-size: .84rem; }
-  .site-header .wrap { padding: 0 12px; }
-  .site-header .icon-btn { width: 36px; height: 36px; }
-  .header-tools { gap: 6px; }
-  .header-progress { display: none; }
-}
-@media (max-width: 360px) {
-  .site-header .wrap { padding: 0 10px; gap: 4px; }
-  .nav { gap: 0; }
-  .nav a { padding: 8px 4px; font-size: .8rem; }
-  .brand-mark { width: 26px; height: 26px; }
-  .site-header .icon-btn { width: 32px; height: 32px; }
+@media (max-width: 340px) {
+  .brand span { display: none; }
 }
 
 /* ---------- Footer ---------- */
